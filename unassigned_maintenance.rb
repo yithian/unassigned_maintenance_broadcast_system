@@ -6,10 +6,10 @@ require 'net/smtp' # to send the report email
 require 'time' # to compare maintenance times
 require 'securerandom' # to generate a unique ID for the report email
 
-USER=ENV['DEDICATED_USER']
-TOKEN=ENV['DEDICATED_TOKEN']
-FROM=ENV['EMAIL_SENDER']
-TO=ENV['EMAIL_RECIPIENT']
+USER=ENV['DEDICATED_USER'].chomp
+TOKEN=ENV['DEDICATED_TOKEN'].chomp
+FROM=ENV['EMAIL_SENDER'].chomp
+TO=ENV['EMAIL_RECIPIENT'].chomp
 
 if USER.nil? or TOKEN.nil? or FROM.nil? or TO.nil?
   puts 'a config item is empty. Exiting...'
