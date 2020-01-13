@@ -59,7 +59,7 @@ Region Leads - please arrange coverage for these maintenances immediately:
 ---
 This message has been sent by the Unassigned Maintenance Broadcast System.
 This utility runs in the #{NAMESPACE} namespace on #{CLUSTER}.
-The source code for this utility can be found at #{REPO} .
+The source code for this utility can be found at #{REPO}.
 EOM
 
   Net::SMTP.start('smtp.corp.redhat.com', 25, FROM) do |smtp|
