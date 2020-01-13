@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: unassigned-maintenances
 spec:
-  schedule: 40 13 * * *
+  schedule: 36 19 * * *
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   ConcurrencyPolicy: Forbid
@@ -38,4 +38,19 @@ spec:
                   secretKeyRef:
                     name: unassigned-maintenance-config
                     key: EMAIL_RECIPIENT
+              - name: SOURCE_REPO
+                valueFrom:
+                  secretKeyRef:
+                    name: unassigned-maintenance-config
+                    key: SOURCE_REPO
+              - name: NAMESPACE
+                valueFrom:
+                  secretKeyRef:
+                    name: unassigned-maintenance-config
+                    key: NAMESPACE
+              - name: CLUSTER
+                valueFrom:
+                  secretKeyRef:
+                    name: unassigned-maintenance-config
+                    key: CLUSTER
           restartPolicy: OnFailure 

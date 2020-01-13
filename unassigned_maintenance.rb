@@ -10,6 +10,9 @@ USER=ENV['DEDICATED_USER'].chomp
 TOKEN=ENV['DEDICATED_TOKEN'].chomp
 FROM=ENV['EMAIL_SENDER'].chomp
 TO=ENV['EMAIL_RECIPIENT'].chomp
+REPO=ENV['SOURCE_REPO'].chomp
+NAMESPACE=ENV['NAMESPACE'].chomp
+CLUSTER=ENV['CLUSTER'].chomp
 
 if USER.nil? or TOKEN.nil? or FROM.nil? or TO.nil?
   puts 'a config item is empty. Exiting...'
@@ -52,6 +55,11 @@ Subject: Unassigned upcoming maintenances
 Region Leads - please arrange coverage for these maintenances immediately:
 
 #{body}
+
+---
+This message has been sent by the Unassigned Maintenance Broadcast System.
+This utility runs in the #{NAMESPACE} namespace on #{CLUSTER}.
+The source code for this utility can be found at #{REPO} .
 EOM
 
   Net::SMTP.start('smtp.corp.redhat.com', 25, FROM) do |smtp|
