@@ -1,1 +1,2 @@
 *.swp
+openshift_resources/config_secret.yml

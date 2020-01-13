@@ -6,9 +6,15 @@ require 'net/smtp' # to send the report email
 require 'time' # to compare maintenance times
 require 'securerandom' # to generate a unique ID for the report email
 
-# NOTE these must be filled out for each user
-USER=''
-TOKEN=''
+USER=ENV['DEDICATED_USER']
+TOKEN=ENV['DEDICATED_TOKEN']
+FROM=ENV['EMAIL_SENDER']
+TO=ENV['EMAIL_RECIPIENT']
+
+if USER.nil? or TOKEN.nil? or FROM.nil? or TO.nil?
+  puts 'a config item is empty. Exiting...'
+  exit 1
+end
 
 BASE='https://dedicated.openshift.com'
 
@@ -36,11 +42,9 @@ end
 
 # send an email to the team list
 def email(body)
-  from = 'sd-sre-platform@redhat.com'
-  to = 'sd-sre-platform@redhat.com'
   message = <<EOM
-From: #{from}
-To: #{to}
+From: #{FROM}
+To: #{TO}
 Date: #{NOW.rfc822}
 Message-Id: #{SecureRandom.uuid}@redhat.com
 Subject: Unassigned upcoming maintenances
