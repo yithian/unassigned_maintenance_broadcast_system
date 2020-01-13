@@ -1,0 +1,32 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: unassigned-maintenances
+  name: unassigned-maintenances
+  namespace: unassigned-maintenance-broadcast-system
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'unassigned-maintenances:latest'
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/yithian/unassigned_maintenance_broadcast_system'
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'ruby:2.4'
+        namespace: openshift
+    type: Source
+  triggers:
+    - imageChange:
+        lastTriggeredImageID: >-
+          registry.access.redhat.com/rhscl/ruby-24-rhel7@sha256:53c9e39d7130aa0adbf84bd17f0ff8cd02b5c254c9e853e4429cdfc448189440
+      type: ImageChange
+    - type: ConfigChange
+
