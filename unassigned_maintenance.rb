@@ -54,8 +54,8 @@ Region Leads - please arrange coverage for these maintenances immediately:
 #{body}
 EOM
 
-  Net::SMTP.start('smtp.corp.redhat.com', 25, from) do |smtp|
-    smtp.send_message message, from, to
+  Net::SMTP.start('smtp.corp.redhat.com', 25, FROM) do |smtp|
+    smtp.send_message message, FROM, TO
   end
 end
 
