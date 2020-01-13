@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+exec ruby unassigned_maintenance.rb
