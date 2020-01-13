@@ -1,9 +1,9 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: pi
+  name: unassigned-maintenances
 spec:
-  schedule: "00 00 * * *"  
+  schedule: 40 13 * * *
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   ConcurrencyPolicy: Forbid
@@ -15,8 +15,8 @@ spec:
             parent: "unassigned-maintenance"
         spec:
           containers:
-          - name: unassigned-maintenance
-            image: unassigned-maintenance
+          - name: unassigned-maintenances
+            image: docker-registry.default.svc:5000/unassigned-maintenance-broadcast-system/unassigned-maintenances
             env:
               - name: DEDICATED_USER
                 valueFrom:
