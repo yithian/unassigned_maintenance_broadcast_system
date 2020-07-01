@@ -79,10 +79,8 @@ api_call('/master_maintenances').each do |mm|
   # filter for schedules on the master maintenance with
   # 1: a schedule
   # 2: a start time for the schedule
-  # 3: incident notes
   selected_schedules = mm['scheduled_maintenances'].select do |s|
-    s['selected_schedule'] and s['selected_schedule']['start'] and
-      s['incident_notes']
+    s['selected_schedule'] and s['selected_schedule']['start']
   end
 
   # filter further for schedules that are unassigned.
@@ -93,10 +91,15 @@ api_call('/master_maintenances').each do |mm|
     start = Time.parse(s['selected_schedule']['start'])
 
     if start.between?(NOW,SOON)
-      assigned = s['incident_notes'].scan('is now scheduled').count
-      unassigned = s['incident_notes'].scan('is no longer scheduled').count
+      if s['incident_notes']
+        assigned = s['incident_notes'].scan('is now scheduled').count
+        unassigned = s['incident_notes'].scan('is no longer scheduled').count
 
-      assigned <= unassigned
+        assigned <= unassigned
+      else
+        # if the incident notes are empty then the maintenance can't have been assigned
+        true
+      end
     end
   end
 
